@@ -1,0 +1,33 @@
+name: CI Pipeline
+
+on:
+  push:
+    tags:
+      - '**' # Trigger on all tags
+    branches:
+      - staging # Trigger on pushes to the staging branch
+  workflow_dispatch: # Allows manual trigger of the workflow
+
+jobs:
+  print_info:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Print Hello World
+        run: echo "Hello World"
+      
+      - name: Define and Print IPADDRESS
+        run: |
+          IPADDRESS="192.1.5.2"
+          echo "IPADDRESS=${IPADDRESS}"
+
+      - name: Print Secret DBPASSWD
+        run: |
+          echo "DBPASSWD=${{ secrets.DBPASSWD }}"
+        env:
+          DBPASSWD: ${{ secrets.DBPASSWD }}
+
+      - name: Display Current Branch and Tags
+        run: |
+          echo "Current branch: ${{ github.ref }}"
+          echo "Current tag: ${{ github.ref_name }}"
