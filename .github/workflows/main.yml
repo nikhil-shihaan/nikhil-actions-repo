@@ -1,5 +1,6 @@
 name: CI Pipeline
 
+# Trigger the workflow on commits to the 'staging' branch and on all tags
 on:
   push:
     tags:
@@ -7,12 +8,15 @@ on:
     branches:
       - staging # Trigger on pushes to the staging branch
   workflow_dispatch: # Allows manual trigger of the workflow
-  
+
 jobs:
   print_info:
     runs-on: ubuntu-latest
     
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      
       - name: Print Hello World
         run: echo "Hello World"
       
@@ -31,4 +35,5 @@ jobs:
         run: |
           echo "Current branch: ${{ github.ref }}"
           echo "Current tag: ${{ github.ref_name }}"
+
 
